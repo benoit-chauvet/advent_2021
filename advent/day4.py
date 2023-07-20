@@ -3,7 +3,7 @@ import array as arr
 
 board_size = 5
 
-path = "./data/day4.txt"
+path = "./data/day4_test.txt"
 
 numbers = arr.array('i')
 boards = list()
@@ -57,7 +57,7 @@ def check_win(board):
             return True
     return False
 
-def caclulate_score(board, last_number):
+def calculate_score(board, last_number):
     score = 0
     for i in range(0, board_size):
         for j in range(0, board_size):
@@ -66,20 +66,30 @@ def caclulate_score(board, last_number):
     return score * last_number
 
 def part1():
-
     init_game()
     for number in numbers:
         for board in boards:
             mark_board(board, number)
             if check_win(board):
-                print(caclulate_score(board, number))
+                print(calculate_score(board, number))
                 return
 
-
 def part2():
+    init_game()
+    rnd = 0
 
-    print("ok")
-
+    for number in numbers:
+        rnd += 1
+        for i in range(0, len(boards)):
+            board = boards[i]
+            if board:
+                mark_board(board, number)
+                if check_win(board):
+                    score = calculate_score(board, number)
+                    boards[i] = None
+                    if(score > 0):
+                        print(rnd)
+                        print(score * rnd)
 
 if __name__ == "__main__":
     part1()
